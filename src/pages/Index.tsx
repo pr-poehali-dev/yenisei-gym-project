@@ -98,42 +98,45 @@ export default function Index() {
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
+      <header className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b animate-fade-in">
         <div className="container mx-auto px-4 py-4">
           <nav className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Icon name="Dumbbell" size={32} className="text-primary" />
+            <div className="flex items-center gap-2 slide-in-left">
+              <Icon name="Dumbbell" size={32} className="text-primary animate-bounce-slow" />
               <span className="text-2xl font-bold gradient-text">Енисей</span>
             </div>
-            <div className="hidden md:flex items-center gap-6">
-              <a href="#home" className="hover:text-primary transition-colors">Главная</a>
-              <a href="#equipment" className="hover:text-primary transition-colors">Тренажеры</a>
-              <a href="#feedback" className="hover:text-primary transition-colors">Обратная связь</a>
-              <a href="#info" className="hover:text-primary transition-colors">Информация</a>
-              <Button variant="default">Войти</Button>
+            <div className="hidden md:flex items-center gap-6 slide-in-right">
+              <a href="#home" className="hover:text-primary transition-all duration-300 hover:scale-110">Главная</a>
+              <a href="#equipment" className="hover:text-primary transition-all duration-300 hover:scale-110">Тренажеры</a>
+              <a href="#feedback" className="hover:text-primary transition-all duration-300 hover:scale-110">Обратная связь</a>
+              <a href="#info" className="hover:text-primary transition-all duration-300 hover:scale-110">Информация</a>
+              <Button variant="default" className="energy-glow">Войти</Button>
             </div>
           </nav>
         </div>
       </header>
 
       <section id="home" className="relative py-20 md:py-32 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-secondary/10 to-background"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-secondary/10 to-background">
+          <div className="absolute top-20 left-10 w-72 h-72 bg-primary/20 rounded-full blur-3xl animate-pulse-slow"></div>
+          <div className="absolute bottom-20 right-10 w-96 h-96 bg-secondary/20 rounded-full blur-3xl animate-pulse-slow" style={{animationDelay: '1s'}}></div>
+        </div>
         <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-4xl mx-auto text-center animate-fade-in">
-            <Badge className="mb-4" variant="secondary">Информационный портал</Badge>
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
+          <div className="max-w-4xl mx-auto text-center">
+            <Badge className="mb-4 zoom-in" variant="secondary">Информационный портал</Badge>
+            <h1 className="text-4xl md:text-6xl font-bold mb-6 animate-fade-in">
               Спортивный зал <span className="gradient-text">Енисей</span>
             </h1>
-            <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+            <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto animate-slide-up">
               Современная спортивная площадка с профессиональным оборудованием. 
               Узнайте о возможностях тренажеров и технике безопасности.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="text-lg">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center animate-slide-up" style={{animationDelay: '0.2s'}}>
+              <Button size="lg" className="text-lg energy-glow hover:scale-110 transition-transform duration-300">
                 <Icon name="Dumbbell" size={20} className="mr-2" />
                 Классификатор тренажеров
               </Button>
-              <Button size="lg" variant="outline" className="text-lg">
+              <Button size="lg" variant="outline" className="text-lg hover-lift dynamic-border">
                 <Icon name="Play" size={20} className="mr-2" />
                 Видео-инструкции
               </Button>
@@ -147,9 +150,9 @@ export default function Index() {
           <h2 className="text-2xl font-bold text-center mb-8">Наши партнеры</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto">
             {partners.map((partner, index) => (
-              <Card key={index} className="hover-scale cursor-pointer text-center">
+              <Card key={index} className="hover-scale cursor-pointer text-center zoom-in" style={{animationDelay: `${index * 0.1}s`}}>
                 <CardContent className="p-6">
-                  <div className="text-4xl mb-2">{partner.logo}</div>
+                  <div className="text-4xl mb-2 floating" style={{animationDelay: `${index * 0.3}s`}}>{partner.logo}</div>
                   <p className="font-semibold">{partner.name}</p>
                 </CardContent>
               </Card>
@@ -167,12 +170,13 @@ export default function Index() {
             </p>
           </div>
 
-          <div className="flex justify-center gap-2 mb-8 flex-wrap">
+          <div className="flex justify-center gap-2 mb-8 flex-wrap animate-fade-in">
             {categories.map((category) => (
               <Button
                 key={category}
                 variant={selectedCategory === category ? 'default' : 'outline'}
                 onClick={() => setSelectedCategory(category)}
+                className={selectedCategory === category ? 'energy-glow' : 'hover-lift'}
               >
                 {category}
               </Button>
@@ -180,10 +184,11 @@ export default function Index() {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredEquipment.map((equipment) => (
-              <Card key={equipment.id} className="hover-scale overflow-hidden">
-                <div className="aspect-video bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
-                  <Icon name="Dumbbell" size={64} className="text-primary" />
+            {filteredEquipment.map((equipment, index) => (
+              <Card key={equipment.id} className="hover-scale overflow-hidden slide-in-left" style={{animationDelay: `${index * 0.1}s`}}>
+                <div className="aspect-video bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center relative overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full animate-[shimmer_2s_infinite]" style={{animation: 'shimmer 3s infinite'}}></div>
+                  <Icon name="Dumbbell" size={64} className="text-primary animate-pulse-slow" />
                 </div>
                 <CardHeader>
                   <div className="flex items-start justify-between mb-2">
